@@ -474,6 +474,17 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
+  @media print {
+    .header { padding-top: 10px; }
+    .step-indicator, .btn-primary, .btn-outline, .btn-accent, .footer { display: none !important; }
+    .screen { display: block !important; }
+    #screen1, #screen2 { display: none !important; }
+    #screen3 { display: block !important; }
+    body { background: white; }
+    .result-card, .results-hero, .summary-banner { box-shadow: none; }
+    .wrapper { padding-bottom: 20px; }
+  }
+
   @media (max-width: 480px) {
     .card { padding: 24px 20px; }
     .results-hero { padding: 28px 20px; }
@@ -620,9 +631,14 @@
 
     <div id="resultCards"></div>
 
-    <button class="btn-primary" onclick="startOver()">
-      ↺ Start a New Calculation
-    </button>
+    <div style="display:flex; gap:12px; margin-top:8px;">
+      <button class="btn-primary btn-accent" style="flex:1" onclick="printReport()">
+        🖨️ Print / Save PDF
+      </button>
+      <button class="btn-primary" style="flex:1" onclick="startOver()">
+        ↺ New Calculation
+      </button>
+    </div>
     <div class="footer" style="margin-top:16px;">Results are estimates based on standard RER/MER formulas.</div>
   </div>
 
@@ -885,6 +901,10 @@ function renderResults() {
 
 function mealTimeHint(t) {
   return { Morning: '7:00 – 9:00 AM', Afternoon: '12:00 – 1:00 PM', Evening: '6:00 – 7:00 PM' }[t] || '';
+}
+
+function printReport() {
+  window.print();
 }
 
 function startOver() {
